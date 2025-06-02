@@ -1,43 +1,49 @@
-const app = require("./app");
-const connectDatabase = require("./db/Database");
-const cloudinary = require("cloudinary");
+const express = require('express');
+const dotenv = require('dotenv');
+const cors = require('cors');
 
-// Handling uncaught Exception
-process.on("uncaughtException", (err) => {
-  console.log(`Error: ${err.message}`);
-  console.log(`shutting down the server for handling uncaught exception`);
-});
+const mongoose = require('mongoose');
+require('dotenv').config({ path: './config/.env' });
 
-// config
-if (process.env.NODE_ENV !== "PRODUCTION") {
-  require("dotenv").config({
-    path: "./config/.env",
-  });
-}
-
-// connect db
-connectDatabase();
-
-cloudinary.config({
-  cloud_name: process.env.CLOUDINARY_NAME,
-  api_key: process.env.CLOUDINARY_API_KEY,
-  api_secret: process.env.CLOUDINARY_API_SECRET
-})
+dotenv.config(); // Load .env variables
 
 
-// create server
-const server = app.listen(process.env.PORT, () => {
-  console.log(
-    `Server is running on http://localhost:${process.env.PORT}`
-  );
-});
+const app = express();
+app.use(cors());
+// Middleware
+app.use(express.json());
 
-// unhandled promise rejection
-process.on("unhandledRejection", (err) => {
-  console.log(`Shutting down the server for ${err.message}`);
-  console.log(`shutting down the server for unhandle promise rejection`);
-
-  server.close(() => {
+// MongoDB Connection
+const connectDatabase = async () => {
+  const uri = process.env.DB_URI;
+//   console.log("Loaded DB_URI:", process.env.DB_URI);
+  if (!uri) {
+    console.error("❌ Error: MongoDB URI is missing in .env file!");
     process.exit(1);
-  });
+  }
+
+  try {
+    await mongoose.connect(uri );
+    console.log('✅ MongoDB connected successfully');
+  } catch (error) {
+    console.error('❌ MongoDB connection failed:', error.message);
+    process.exit(1);
+  }
+};
+
+connectDatabase(); // Call the function to connect DB
+
+// Default route
+app.get('/', (req, res) => {
+  res.send('CRM backend is running!');
+});
+
+// Routes
+app.use('/api/auth', require('./routes/auth'));
+app.use('/api/dev', require('./routes/manualUser')); // for user creation
+
+// Start server
+const PORT = process.env.PORT || 8000;
+app.listen(PORT, () => {
+  console.log(`🚀 Server is running on port ${PORT}`);
 });
