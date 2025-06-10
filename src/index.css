@@ -1,0 +1,55 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@font-face {
+  font-family: 'Ancizar Serif';
+  src: url('./fonts/AncizarSerif-Regular.ttf') format('ttf');
+  font-weight: 400;
+  font-style:normal;
+}
+
+body {
+  margin:0;
+  padding:0;
+  font-family: "Ancizar Serif", serif;
+}
+
+.input-wrapper {
+  position: relative;
+}
+
+.input-wrapper input {
+  position:relative;
+  padding: 10px 10px 10px 10px;
+  font-size: 16px;
+  width: 85%;
+  border:1px solid slategrey;
+  border-radius:5px;
+}
+
+.input-wrapper label {
+  position: absolute;
+  top: 10px;
+  left: 45px;
+  color: slategrey;
+  font-size: 17px;
+  pointer-events: none;
+  transition: 0.2s ease;
+}
+
+/* Move label when input is focused OR not empty */
+.input-wrapper input:focus + label,
+.input-wrapper input:not(:placeholder-shown) + label {
+  top: -10px;
+  left: 20px;
+  font-size: 16px;
+  color: #28378f;
+  background: white;
+  padding: 0 5px;
+}
+
+.input-wrapper input:focus{
+  outline: 1px solid #798aea;
+  box-shadow: 0px 0px 5px #798aea;
+}
