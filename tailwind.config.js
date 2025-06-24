@@ -6,8 +6,20 @@ export default {
   ],
   theme: {
     extend: {
+      colors: {
+        salesmain: '#206879',  
+        salesSidebar: '#248ca3', 
+        salesHover: '#164f5a',
+        adminmain: '#a72468',  
+        adminSidebar: '#f94ba5', 
+        adminHover: '#962b64',
+        teammain: '#28378f',  
+        teamSidebar: '#4056c1',  
+        teamHover:'#3548b7',   
+      },
       boxShadow: {
         'custom-gray': '0px 0px 10px gray',
+        'custom-grey': '0px 0px 5px gray',
       },
       animation:{
         scroll: 'scroll 5s ease-in-out infinite alternate',
