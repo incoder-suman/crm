@@ -16,6 +16,7 @@ const AdminDashboard = () => {
       business_type: "Service",
       industry_type: "Engineer",
       client_priority: "High Value",
+      client_origin:"Domestic",
       service: "Website",
       contract_date: "2025-06-10",
       contract_duration: "12 Months",
@@ -50,55 +51,55 @@ const AdminDashboard = () => {
 
       <div className="flex">
         {/* Sidebar */}
-        <div className="bg-adminSidebar w-72 h-[calc(100vh-5rem)] fixed top-20 left-0 flex flex-col text-start z-10 shadow-lg">
+        <div className="bg-adminSidebar w-60 h-[calc(100vh-5rem)] fixed top-20 left-0 flex flex-col text-start z-10 shadow-lg">
           <div
             onClick={() => setActiveSection("total")}
-            className={`py-4 border-b border-white text-xl pl-8 font-semibold cursor-pointer hover:bg-adminmain text-white ${
-              activeSection === "total" ? "bg-adminmain" : ""
+            className={`py-1 mt-4 mx-4 rounded-md text-md pl-2 cursor-pointer hover:bg-adminmain text-white ${
+              activeSection === "total" ? "bg-adminmain" : "bg-adminmainlight"
             }`}
           >
             Total Projects
           </div>
           <div
             onClick={() => setActiveSection("actives")}
-            className={`py-4 border-b border-white text-xl pl-8 font-semibold cursor-pointer hover:bg-adminmain text-white ${
-              activeSection === "actives" ? "bg-adminmain" : ""
+            className={`py-1 mt-4 mx-4 rounded-md text-md pl-2 cursor-pointer hover:bg-adminmain text-white ${
+              activeSection === "actives" ? "bg-adminmain" : "bg-adminmainlight"
             }`}
           >
             Active Projects
           </div>
           <div
             onClick={() => setActiveSection("non_actives")}
-            className={`py-4 border-b border-white text-xl pl-8 font-semibold cursor-pointer hover:bg-adminmain text-white ${
-              activeSection === "non_actives" ? "bg-adminmain" : ""
+            className={`py-1 mt-4 mx-4 rounded-md text-md pl-2 cursor-pointer hover:bg-adminmain text-white ${
+              activeSection === "non_actives" ? "bg-adminmain" : "bg-adminmainlight"
             }`}
           >
             Non-Active Projects (Hold)
           </div>
           <div
             onClick={() => setActiveSection("renewals")}
-            className={`py-4 flex justify-between border-b border-white text-xl px-8 font-semibold cursor-pointer hover:bg-adminmain text-white ${
-              activeSection === "renewals" ? "bg-adminmain" : ""
+            className={`py-1 mt-4 mx-4 rounded-md text-md pl-2 cursor-pointer hover:bg-adminmain text-white ${
+              activeSection === "renewals" ? "bg-adminmain" : "bg-adminmainlight"
             }`}
           >
-            Renewals {projects.length > 0 ? <><span className="bg-red-800 ml-5 text-sm py-1 px-2 rounded-[100%]">{projects.length}</span></> : ""}
+            Renewals {projects.length > 0 ? <><span className="bg-red-800 ml-20 text-xs py-1 px-2 rounded-[100%]">{projects.length}</span></> : ""}
           </div>
           <div
             onClick={() => setActiveSection("allocation")}
-            className={`py-4 border-b flex justify-between border-white text-xl px-8 font-semibold cursor-pointer hover:bg-adminmain text-white ${
-              activeSection === "allocation" ? "bg-adminmain" : ""
+            className={`py-1 mt-4 mx-4 rounded-md text-md pl-2 cursor-pointer hover:bg-adminmain text-white ${
+              activeSection === "allocation" ? "bg-adminmain" : "bg-adminmainlight"
             }`}
           >
-            Assign Project {projects.length > 0 ? <><span className="bg-red-800 ml-5 py-1 px-2 text-sm rounded-[100%]">{projects.length}</span></> : ""}
+            Assign Project {projects.length > 0 ? <><span className="bg-red-800 ml-12 py-1 px-2 text-xs rounded-[100%]">{projects.length}</span></> : ""}
           </div>
-          <div className="py-4 mt-auto border-t border-white text-xl font-semibold cursor-pointer hover:bg-adminmain flex items-center justify-center text-white">
-            <IoMdLogOut className="text-2xl mr-2" />
+          <div className="py-1 mt-auto mb-4 mx-4 rounded-md text-md pl-2 cursor-pointer bg-adminmainlight hover:bg-adminmain flex items-center justify-center text-white">
+            <IoMdLogOut className="text-xl mr-2" />
             Logout
           </div>
         </div>
 
         {/* Main Content */}
-        <div className="ml-72 mt-20 h-[calc(100vh-5rem)] overflow-y-auto flex-1 p-6 bg-gray-100">
+        <div className="ml-60 mt-20 h-[calc(100vh-5rem)] overflow-y-auto flex-1 p-6 bg-gray-100">
           {/* Total Projects Section */}
           {activeSection === "total" && (
             <div className="p-6 shadow-custom-gray rounded-md bg-white max-w-6xl mx-auto">
@@ -107,20 +108,56 @@ const AdminDashboard = () => {
               </h2>
               <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
                 {projects.map((proj, index) => (
-                  <div key={index} className="relative">
-                    <div className="bg-gradient-to-br from-white to-[#f2f6f9] border border-gray-200 shadow-custom-grey rounded-2xl p-4 hover:shadow-xl text-center cursor-pointer transition-all duration-300">
-                      <h2 className="text-[25px] font-semibold mb-1 text-adminmain">
-                        {proj.company_name}
-                      </h2>
-                      <p className="text-base font-semibold text-adminmain mb-1">
-                        Sales Person: {proj.Sales_person}
-                      </p>
-                      <p className="font-semibold text-adminSidebar">
-                        Assigned To: {proj.Assigned}
-                      </p>
+                 <div
+                      key={index}
+                      className="p-5 bg-white/80 backdrop-blur-sm border border-gray-200 rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 cursor-pointer flex flex-col gap-4 w-full max-w-md mx-auto"
+                    >
+                      {/* Header */}
+                      <div className="flex items-center justify-between">
+                        <h3 className="text-xl font-bold text-adminmain">
+                          {proj.company_name}
+                        </h3>
+                        <span className="text-xs text-gray-500">
+                          {new Date().toLocaleDateString()}
+                        </span>
+                      </div>
+
+                      {/* Info Block */}
+                      <div className="text-[15px] text-gray-700 space-y-1">
+                        <p>
+                          <span className="font-semibold text-adminmain">
+                            Client:
+                          </span>{" "}
+                          {proj.client_name}
+                        </p>
+
+                        <p>
+                          <span className="font-semibold text-adminmain">
+                            Assigned To:
+                          </span>{" "}
+                          {proj.assigned ? (
+                            <span className="text-green-600 font-medium">
+                              {proj.assigned}
+                            </span>
+                          ) : (
+                            <span className="text-red-600 font-medium italic">
+                              Pending...
+                            </span>
+                          )}
+                        </p>
+
+                        <div className="flex items-center gap-2">
+                          <span className="font-semibold text-adminmain">
+                            Service:
+                          </span>
+                          <span className="px-3 py-1 text-xs bg-pink-100 text-adminmain rounded-full capitalize font-semibold">
+                            {proj.service.replace(/_/g, " ")}
+                          </span>
+                        </div>
+                      </div>
 
                       {/* Buttons inside the card but don't trigger modal */}
-                      <div className="flex justify-center gap-2 mt-3">
+                      <div className="flex justify-start gap-2 ">
                         <button
                           onClick={() => setProjectStatus("active")}
                           className={`px-4 py-1 rounded-full font-semibold text-white transition 
@@ -151,7 +188,7 @@ const AdminDashboard = () => {
                         </button>
                       </div>
                     </div>
-                  </div>
+                  
                 ))}
               </div>
             </div>
@@ -166,20 +203,55 @@ const AdminDashboard = () => {
               {projectStatus === "active" && (
                 <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
                   {projects.map((proj, index) => (
-                    <div key={index} className="relative">
-                      <div className="bg-gradient-to-br from-white to-[#f2f6f9] border border-gray-200 shadow-custom-grey rounded-2xl p-4 hover:shadow-xl text-center cursor-pointer transition-all duration-300">
-                        <h2 className="text-[25px] font-semibold mb-1 text-adminmain">
+                    <div
+                      key={index}
+                      className="p-5 bg-white/80 backdrop-blur-sm border border-gray-200 rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 cursor-pointer flex flex-col gap-4 w-full max-w-md mx-auto"
+                    >
+                      {/* Header */}
+                      <div className="flex items-center justify-between">
+                        <h3 className="text-xl font-bold text-adminmain">
                           {proj.company_name}
-                        </h2>
-                        <p className="text-base font-semibold text-adminmain mb-1">
-                          Sales Person: {proj.Sales_person}
-                        </p>
-                        <p className="font-semibold text-adminSidebar">
-                          Assigned To: {proj.Assigned}
+                        </h3>
+                        <span className="text-xs text-gray-500">
+                          {new Date().toLocaleDateString()}
+                        </span>
+                      </div>
+
+                      {/* Info Block */}
+                      <div className="text-[15px] text-gray-700 space-y-1">
+                        <p>
+                          <span className="font-semibold text-adminmain">
+                            Client:
+                          </span>{" "}
+                          {proj.client_name}
                         </p>
 
+                        <p>
+                          <span className="font-semibold text-adminmain">
+                            Assigned To:
+                          </span>{" "}
+                          {proj.assigned ? (
+                            <span className="text-green-600 font-medium">
+                              {proj.assigned}
+                            </span>
+                          ) : (
+                            <span className="text-red-600 font-medium italic">
+                              Pending...
+                            </span>
+                          )}
+                        </p>
+
+                        <div className="flex items-center gap-2">
+                          <span className="font-semibold text-adminmain">
+                            Service:
+                          </span>
+                          <span className="px-3 py-1 text-xs bg-pink-100 text-adminmain rounded-full capitalize font-semibold">
+                            {proj.service.replace(/_/g, " ")}
+                          </span>
+                        </div>
+                      </div>
                         {/* Buttons inside the card but don't trigger modal */}
-                        <div className="flex justify-center gap-2 mt-3">
+                        <div>
                           <button
                             onClick={() => setModalData(proj)}
                             className="px-4 py-2 bg-adminmain text-white rounded-full text-sm font-semibold hover:bg-adminHover transition"
@@ -188,7 +260,7 @@ const AdminDashboard = () => {
                           </button>
                         </div>
                       </div>
-                    </div>
+                 
                   ))}
                 </div>
               )}
@@ -204,20 +276,55 @@ const AdminDashboard = () => {
               {projectStatus === "non-active" && (
                 <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
                   {projects.map((proj, index) => (
-                    <div key={index} className="relative">
-                      <div className="bg-gradient-to-br from-white to-[#f2f6f9] border border-gray-200 shadow-custom-grey rounded-2xl p-4 hover:shadow-xl text-center cursor-pointer transition-all duration-300">
-                        <h2 className="text-[25px] font-semibold mb-1 text-adminmain">
+                   <div
+                      key={index}
+                      className="p-5 bg-white/80 backdrop-blur-sm border border-gray-200 rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 cursor-pointer flex flex-col gap-4 w-full max-w-md mx-auto"
+                    >
+                      {/* Header */}
+                      <div className="flex items-center justify-between">
+                        <h3 className="text-xl font-bold text-adminmain">
                           {proj.company_name}
-                        </h2>
-                        <p className="text-base font-semibold text-adminmain mb-1">
-                          Sales Person: {proj.Sales_person}
-                        </p>
-                        <p className="font-semibold text-adminSidebar">
-                          Assigned To: {proj.Assigned}
+                        </h3>
+                        <span className="text-xs text-gray-500">
+                          {new Date().toLocaleDateString()}
+                        </span>
+                      </div>
+
+                      {/* Info Block */}
+                      <div className="text-[15px] text-gray-700 space-y-1">
+                        <p>
+                          <span className="font-semibold text-adminmain">
+                            Client:
+                          </span>{" "}
+                          {proj.client_name}
                         </p>
 
+                        <p>
+                          <span className="font-semibold text-adminmain">
+                            Assigned To:
+                          </span>{" "}
+                          {proj.assigned ? (
+                            <span className="text-green-600 font-medium">
+                              {proj.assigned}
+                            </span>
+                          ) : (
+                            <span className="text-red-600 font-medium italic">
+                              Pending...
+                            </span>
+                          )}
+                        </p>
+
+                        <div className="flex items-center gap-2">
+                          <span className="font-semibold text-adminmain">
+                            Service:
+                          </span>
+                          <span className="px-3 py-1 text-xs bg-pink-100 text-adminmain rounded-full capitalize font-semibold">
+                            {proj.service.replace(/_/g, " ")}
+                          </span>
+                        </div>
+                      </div>
                         {/* Buttons inside the card but don't trigger modal */}
-                        <div className="flex justify-center gap-2 mt-3">
+                        <div>
                           <button
                             onClick={() => setModalData(proj)}
                             className="px-4 py-2 bg-adminmain text-white rounded-full text-sm font-semibold hover:bg-adminHover transition"
@@ -226,7 +333,7 @@ const AdminDashboard = () => {
                           </button>
                         </div>
                       </div>
-                    </div>
+                  
                   ))}
                 </div>
               )}
@@ -241,20 +348,56 @@ const AdminDashboard = () => {
               </h2>
                 <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
                   {projects.map((proj, index) => (
-                    <div key={index} className="relative">
-                      <div className="bg-gradient-to-br from-white to-[#f2f6f9] border border-gray-200 shadow-custom-grey rounded-2xl p-4 hover:shadow-xl text-center cursor-pointer transition-all duration-300">
-                        <h2 className="text-[25px] font-semibold mb-1 text-adminmain">
+                    <div
+                      key={index}
+                      className="p-5 bg-white/80 backdrop-blur-sm border border-gray-200 rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 cursor-pointer flex flex-col gap-4 w-full max-w-md mx-auto"
+                    >
+                      {/* Header */}
+                      <div className="flex items-center justify-between">
+                        <h3 className="text-xl font-bold text-adminmain">
                           {proj.company_name}
-                        </h2>
-                        <p className="text-base font-semibold text-adminmain mb-1">
-                          Sales Person: {proj.Sales_person}
-                        </p>
-                        <p className="font-semibold text-adminSidebar">
-                          Assigned To: {proj.Assigned}
+                        </h3>
+                        <span className="text-xs text-gray-500">
+                          {new Date().toLocaleDateString()}
+                        </span>
+                      </div>
+
+                      {/* Info Block */}
+                      <div className="text-[15px] text-gray-700 space-y-1">
+                        <p>
+                          <span className="font-semibold text-adminmain">
+                            Client:
+                          </span>{" "}
+                          {proj.client_name}
                         </p>
 
+                        <p>
+                          <span className="font-semibold text-adminmain">
+                            Assigned To:
+                          </span>{" "}
+                          {proj.assigned ? (
+                            <span className="text-green-600 font-medium">
+                              {proj.assigned}
+                            </span>
+                          ) : (
+                            <span className="text-red-600 font-medium italic">
+                              Pending...
+                            </span>
+                          )}
+                        </p>
+
+                        <div className="flex items-center gap-2">
+                          <span className="font-semibold text-adminmain">
+                            Service:
+                          </span>
+                          <span className="px-3 py-1 text-xs bg-pink-100 text-adminmain rounded-full capitalize font-semibold">
+                            {proj.service.replace(/_/g, " ")}
+                          </span>
+                        </div>
+                      </div>
+
                         {/* Buttons inside the card but don't trigger modal */}
-                        <div className="flex justify-center gap-2 mt-3">
+                        <div className="flex justify-start gap-2">
                           <button
                             onClick={() => setRenewDate(true)}
                             className="px-4 py-2 bg-adminmain text-white rounded-full text-sm font-semibold hover:bg-adminHover transition"
@@ -270,7 +413,7 @@ const AdminDashboard = () => {
                           </button>
                         </div>
                         {renewDate && (
-                        <div className="mt-5 bg-[#f8fafc] border border-gray-300 rounded-xl p-4 shadow-inner">
+                        <div className="bg-[#f8fafc] border border-gray-300 rounded-xl p-4 shadow-inner">
                           <label className="block text-sm font-semibold text-adminmain mb-2">
                             Set New Renewal Date:
                           </label>
@@ -290,7 +433,7 @@ const AdminDashboard = () => {
                         </div>
                       )}
                       </div>
-                    </div>
+                    
                   ))}
                 </div>
             </div>
@@ -304,20 +447,56 @@ const AdminDashboard = () => {
               </h2>
               <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
                 {projects.map((proj, index) => (
-                  <div key={index} className="relative">
-                    <div className="bg-gradient-to-br from-white to-[#f2f6f9] border border-gray-200 shadow-custom-grey rounded-2xl p-4 hover:shadow-xl text-center cursor-pointer transition-all duration-300">
-                      <h2 className="text-[25px] font-semibold mb-1 text-adminmain">
-                        {proj.company_name}
-                      </h2>
-                      <p className="text-base font-semibold text-adminmain mb-1">
-                        Sales Person: {proj.Sales_person}
-                      </p>
-                      <p className="font-semibold text-adminSidebar">
-                        Assigned To: {proj.Assigned}
-                      </p>
+                 <div
+                      key={index}
+                      className="p-5 bg-white/80 backdrop-blur-sm border border-gray-200 rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 cursor-pointer flex flex-col gap-4 w-full max-w-md mx-auto"
+                    >
+                      {/* Header */}
+                      <div className="flex items-center justify-between">
+                        <h3 className="text-xl font-bold text-adminmain">
+                          {proj.company_name}
+                        </h3>
+                        <span className="text-xs text-gray-500">
+                          {new Date().toLocaleDateString()}
+                        </span>
+                      </div>
+
+                      {/* Info Block */}
+                      <div className="text-[15px] text-gray-700 space-y-1">
+                        <p>
+                          <span className="font-semibold text-adminmain">
+                            Client:
+                          </span>{" "}
+                          {proj.client_name}
+                        </p>
+
+                        <p>
+                          <span className="font-semibold text-adminmain">
+                            Assigned To:
+                          </span>{" "}
+                          {proj.assigned ? (
+                            <span className="text-green-600 font-medium">
+                              {proj.assigned}
+                            </span>
+                          ) : (
+                            <span className="text-red-600 font-medium italic">
+                              Pending...
+                            </span>
+                          )}
+                        </p>
+
+                        <div className="flex items-center gap-2">
+                          <span className="font-semibold text-adminmain">
+                            Service:
+                          </span>
+                          <span className="px-3 py-1 text-xs bg-pink-100 text-adminmain rounded-full capitalize font-semibold">
+                            {proj.service.replace(/_/g, " ")}
+                          </span>
+                        </div>
+                      </div>
 
                       {/* Buttons inside the card but don't trigger modal */}
-                      <div className="flex justify-center gap-2 mt-3">
+                      <div>
                         <button
                           onClick={() => setModalData(proj)}
                           className="px-4 py-2 bg-adminmain text-white rounded-full text-sm font-semibold hover:bg-adminHover transition"
@@ -326,7 +505,7 @@ const AdminDashboard = () => {
                         </button>
                       </div>
                     </div>
-                  </div>
+                 
                 ))}
               </div>
             </div>
@@ -335,40 +514,63 @@ const AdminDashboard = () => {
       </div>
 
       {/* Modal */}
-      {modalData && (
-        <div className="fixed inset-0 bg-black/50 z-50 flex items-center justify-center px-4">
-          <div className="relative bg-white rounded-3xl w-full max-w-4xl max-h-[90vh] overflow-y-auto shadow-2xl border border-gray-200 p-8">
-            {/*  Close Button */}
+       {modalData && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 backdrop-blur-sm px-4 animate-fadeIn">
+          <div className="relative w-full max-w-4xl max-h-[90vh] overflow-y-auto rounded-2xl border border-gray-200 bg-white shadow-2xl p-8">
+            {/* Close Button */}
             <button
-              className="absolute top-4 right-4 text-gray-500 hover:text-black text-3xl font-bold"
+              className="absolute top-4 right-4 text-gray-400 hover:text-gray-600 text-3xl font-bold"
               onClick={() => setModalData(null)}
             >
               &times;
             </button>
 
-            {/*  Company Title */}
-            <div className="text-center mb-6">
-              <h2 className="text-3xl font-bold text-adminmain tracking-wide">
+            {/* Header */}
+            <div className="text-center">
+              <h2 className="text-3xl font-extrabold text-adminmain tracking-tight">
                 {modalData.company_name}
               </h2>
+              <p className="text-sm text-gray-500 mt-1">
+                Detailed Project Overview
+              </p>
             </div>
 
-            {/*  Project Details */}
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 text-[15px] text-gray-700 leading-6">
-              <p>
-                <strong>Client Name:</strong> {modalData.client_name}
-              </p>
-              <p>
-                <strong>Email:</strong> {modalData.client_email}
-              </p>
-              <p>
-                <strong>Phone:</strong> {modalData.client_phone_number}
-              </p>
+            {/* Details Grid */}
+            {/* Details Grid */}
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-3 text-[15px] text-gray-700 leading-6 border-t border-gray-100 pt-6">
+              {/* Mapped fields without address */}
+              {[
+                { label: "Client Name", value: modalData.client_name },
+                { label: "Email", value: modalData.client_email },
+                { label: "Phone", value: modalData.client_phone_number },
+                { label: "Sales Person", value: modalData.Sales_person },
+                { label: "Business Type", value: modalData.business_type },
+                { label: "Industry Type", value: modalData.industry_type },
+                { label: "Priority", value: modalData.client_priority },
+                { label: "Origin", value: modalData.client_origin },
+                { label: "Service", value: modalData.service },
+                { label: "Contract Date", value: modalData.contract_date },
+                { label: "Duration", value: modalData.contract_duration },
+                { label: "Renewal", value: modalData.renewal },
+                { label: "Amount", value: `₹${modalData.amount}` },
+              ].map(
+                (item, i) =>
+                  item.value && (
+                    <div key={i}>
+                      <p className="text-sm font-semibold text-adminmain">
+                        {item.label}
+                      </p>
+                      <p className="text-gray-800">{item.value}</p>
+                    </div>
+                  )
+              )}
 
-              {/*  Conditional Website */}
+              {/* Website block */}
               {modalData.website_link && (
-                <p>
-                  <strong>Website:</strong>{" "}
+                <div>
+                  <p className="text-sm font-semibold text-adminmain">
+                    Website
+                  </p>
                   <a
                     href={modalData.website_link}
                     target="_blank"
@@ -376,108 +578,104 @@ const AdminDashboard = () => {
                   >
                     {modalData.website_link}
                   </a>
-                </p>
+                </div>
               )}
 
-              <p>
-                <strong>Sales Person:</strong> {modalData.Sales_person}
-              </p>
-              <p>
-                <strong>Business Type:</strong> {modalData.business_type}
-              </p>
-              <p>
-                <strong>Industry Type:</strong> {modalData.industry_type}
-              </p>
-              <p>
-                <strong>Client Priority:</strong> {modalData.client_priority}
-              </p>
-              <p>
-                <strong>Service:</strong> {modalData.service}
-              </p>
-              <p>
-                <strong>Contract Date:</strong> {modalData.contract_date}
-              </p>
-              <p>
-                <strong>Contract Duration:</strong>{" "}
-                {modalData.contract_duration}
-              </p>
-              <p>
-                <strong>Renewal:</strong> {modalData.renewal}
-              </p>
-              <p>
-                <strong>Amount:</strong> ₹{modalData.amount}
-              </p>
-              <p>
-                <strong>Company Address:</strong> {modalData.company_address}
-              </p>
+              {/* Address block with proper line breaks */}
+              {modalData.company_address && (
+                <div className="md:col-span-3">
+                  <p className="text-sm font-semibold text-adminmain">
+                    Company Address
+                  </p>
+                  <p className="text-gray-800 whitespace-pre-line">
+                    {modalData.company_address}
+                  </p>
+                </div>
+              )}
+
+              
             </div>
 
             {/* Checklist */}
             {modalData.checklist?.length > 0 && (
-              <div className="mt-6">
-                <p className="font-semibold text-lg text-adminmain mb-2">
-                  Checklist
-                </p>
+              <div className="mt-4">
+                <h3 className="text-lg font-semibold text-adminmain mb-3">
+                  Selected Services
+                </h3>
                 <div className="flex flex-wrap gap-2">
                   {modalData.checklist.map((item, i) => (
-                    <span
+                    <div
                       key={i}
-                      className="bg-[#f7d2e5] text-adminmain px-3 py-1 rounded-full text-base font-medium shadow"
+                      className="rounded-full border border-adminmain/30 bg-adminmainlight text-adminmain px-4 py-1 text-[14px] font-medium flex items-center gap-1"
                     >
-                      {item}
-                    </span>
+                      <span>{item}</span>
+                      {modalData.postCounts?.[item] && (
+                        <span className="text-gray-600 text-xs">
+                          ({modalData.postCounts[item]} posts)
+                        </span>
+                      )}
+                      {modalData.reelCounts?.[item] && (
+                        <span className="text-gray-600 text-xs">
+                          ({modalData.reelCounts[item]} reels)
+                        </span>
+                      )}
+                      {modalData.videoCounts?.[item] && (
+                        <span className="text-gray-600 text-xs">
+                          ({modalData.videoCounts[item]} videos)
+                        </span>
+                      )}
+                    </div>
                   ))}
                 </div>
               </div>
             )}
 
-            {/*  Brief */}
+            {/* Brief */}
             {modalData.brief && (
-              <div className="mt-6">
-                <p className="font-semibold text-lg text-adminmain mb-2">
+              <div className="mt-4">
+                <h3 className="text-lg font-semibold text-adminmain">
                   Service Brief
-                </p>
-                <p className="text-base text-gray-700">{modalData.brief}</p>
+                </h3>
+                <div className="rounded-md bg-gray-50 border border-gray-100 text-gray-700 text-sm leading-relaxed">
+                  {modalData.brief}
+                </div>
               </div>
             )}
 
-            <div className="grid grid-cols-1 sm:grid-cols-2 mt-4">
-              {/*  PI Document */}
+            {/* Documents */}
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 mt-1">
               {modalData.PI && (
-                <div className="">
-                  <p className="font-semibold text-lg text-adminmain mb-2">
+                <div>
+                  <h3 className="text-md font-semibold text-adminmain mb-2">
                     PI Document
-                  </p>
+                  </h3>
                   <a
                     href={URL.createObjectURL(modalData.PI)}
                     target="_blank"
-                    className="inline-block bg-adminmain hover:bg-adminHover text-white px-5 py-2 rounded-lg transition duration-300 text-sm"
+                    className="inline-flex items-center justify-center rounded-full bg-adminmain hover:bg-adminHover text-white px-5 py-2 text-sm font-medium transition"
                   >
                     View PDF
                   </a>
                 </div>
               )}
-
-              {/* logo */}
-              {modalData.logoURL &&
-                typeof modalData.logoURL === "string" &&
-                modalData.logoURL.trim() !== "" && (
-                  <div className="">
-                    <p className="font-semibold text-lg text-adminmain mb-2">
-                      Logo
-                    </p>
-                    <a
-                      href={modalData.logoURL}
-                      target="_blank"
-                      className="inline-block bg-adminmain hover:bg-adminHover text-white px-5 py-2 rounded-lg transition duration-300 text-sm"
-                    >
-                      View Logo
-                    </a>
-                  </div>
-                )}
+              {modalData.logoURL?.trim() && (
+                <div>
+                  <h3 className="text-md font-semibold text-adminmain mb-2">
+                    Logo
+                  </h3>
+                  <a
+                    href={modalData.logoURL}
+                    target="_blank"
+                    className="inline-flex items-center justify-center rounded-full bg-adminmain hover:bg-adminHover text-white px-5 py-2 text-sm font-medium transition"
+                  >
+                    View Logo
+                  </a>
+                </div>
+              )}
+              
             </div>
             {activeSection === "allocation" && (
-              <div className="mt-6 flex justify-center gap-4">
+              <div className="flex items-center justify-center gap-4 mt-6">
                 <button
                   className="bg-green-600 hover:bg-green-700 text-white px-5 py-2 rounded-full font-semibold"
                   onClick={() => {
@@ -498,6 +696,7 @@ const AdminDashboard = () => {
           </div>
         </div>
       )}
+
 
       {/* assign modal */}
       {nextModalOpen && (

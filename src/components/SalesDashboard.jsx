@@ -57,33 +57,37 @@ const SalesDashboard = () => {
 
       <div className="flex">
         {/* Sidebar */}
-        <div className="bg-salesSidebar w-72 h-[calc(100vh-5rem)] fixed top-20 left-0 flex flex-col text-start z-10 shadow-lg">
+        <div className="bg-salesSidebar w-60 h-[calc(100vh-5rem)] fixed top-20 left-0 flex flex-col text-start z-10 shadow-lg">
           <div
             onClick={() => setActiveSection("existing")}
-            className={`py-4 border-b border-white text-xl font-semibold pl-8 cursor-pointer hover:bg-salesmain text-white ${
-              activeSection === "existing" ? "bg-salesmain" : ""
+            className={`py-1 mt-4 mx-4 rounded-md text-md pl-2 cursor-pointer hover:bg-salesmain text-white ${
+              activeSection === "existing"
+                ? "bg-salesmain"
+                : "bg-salesmainlight"
             }`}
           >
             Existing Projects
           </div>
           <div
             onClick={() => setActiveSection("new")}
-            className={`py-4 border-b border-white text-xl font-semibold pl-8 cursor-pointer hover:bg-salesmain text-white ${
-              activeSection === "new" ? "bg-salesmain" : ""
+            className={`py-1 mt-4 mx-4 rounded-md text-md pl-2 cursor-pointer hover:bg-salesmain text-white ${
+              activeSection === "new" ? "bg-salesmain" : "bg-salesmainlight"
             }`}
           >
             Add New Project
           </div>
           <div
             onClick={() => setActiveSection("renewals")}
-            className={`py-4 border-b border-white text-xl font-semibold flex justify-between px-8 cursor-pointer hover:bg-salesmain text-white ${
-              activeSection === "renewals" ? "bg-salesmain" : ""
+            className={`py-1 mt-4 mx-4 rounded-md text-md pl-2 pr-4 cursor-pointer hover:bg-salesmain text-white ${
+              activeSection === "renewals"
+                ? "bg-salesmain"
+                : "bg-salesmainlight"
             }`}
           >
             Renewals{" "}
             {projects.length > 0 ? (
               <>
-                <span className="bg-red-800 ml-5 text-sm py-1 px-2 rounded-[100%]">
+                <span className="bg-red-600 ml-20 text-xs py-1 px-2 rounded-[100%]">
                   {projects.length}
                 </span>
               </>
@@ -91,13 +95,13 @@ const SalesDashboard = () => {
               ""
             )}
           </div>
-          <div className="py-4 mt-auto border-t border-white text-xl font-semibold cursor-pointer hover:bg-salesmain flex items-center justify-center text-white">
-            <IoMdLogOut className="text-2xl mr-2" /> Logout
+          <div className="py-1 mt-auto mb-4 mx-4 rounded-md bg-salesmainlight text-md pl-2 cursor-pointer hover:bg-salesmain flex items-center justify-center gap-[6px] text-white">
+            <IoMdLogOut className="text-xl" /> Logout
           </div>
         </div>
 
         {/* Main Content */}
-        <div className="ml-72 mt-20 h-[calc(100vh-5rem)] overflow-y-auto flex-1 p-6 bg-gray-100">
+        <div className="ml-60 mt-20 h-[calc(100vh-5rem)] overflow-y-auto flex-1 p-6 bg-gray-100">
           {/* Existing Projects Section */}
           {activeSection === "existing" && (
             <div className="p-6 shadow-custom-gray rounded-md bg-white max-w-6xl mx-auto">
@@ -109,33 +113,60 @@ const SalesDashboard = () => {
                   No projects added yet.
                 </p>
               ) : (
-                <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6 mt-6">
+                <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 mt-3">
                   {projects.map((proj, index) => (
                     <div
                       key={index}
-                      className="p-4 bg-white border border-gray-300 rounded-xl shadow-custom-grey hover:shadow-xl cursor-pointer transition-all duration-300 text-center gap-5"
+                      className="p-6 bg-white/80 backdrop-blur-sm border border-gray-200 rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 cursor-pointer flex flex-col gap-4 w-full max-w-md mx-auto"
                     >
-                      {/* {proj.logoURL && (
-                          <img src={proj.logoURL} alt="" className="h-16 w-16 object-contain mb-3 rounded-full border border-gray-200" />
-                        )} */}
-                      <div>
-                        <h3 className="text-[25px] font-semibold text-salesmain mb-1">
+                      {/* Header */}
+                      <div className="flex items-center justify-between">
+                        <h3 className="text-xl font-bold text-salesmain">
                           {proj.company_name}
                         </h3>
-                        <p className="text-base font-semibold text-salesmain mb-1">
-                          Client Name: {proj.client_name}
-                        </p>
-                        <p className="text-base font-semibold text-salesmain mb-1">
-                          Assigned To:{" "}
-                          {proj.assigned ? proj.assigned : <><span className="text-salesSidebar">Pending...</span></>}
-                        </p>
-                        <p className="font-semibold text-salesSidebar">
-                          Service: {proj.service.replace(/_/g, " ")}
-                        </p>
+                        <span className="text-xs text-gray-500">
+                          {new Date().toLocaleDateString()}
+                        </span>
                       </div>
+
+                      {/* Info Block */}
+                      <div className="text-[15px] text-gray-700 space-y-1">
+                        <p>
+                          <span className="font-semibold text-salesmain">
+                            Client:
+                          </span>{" "}
+                          {proj.client_name}
+                        </p>
+
+                        <p>
+                          <span className="font-semibold text-salesmain">
+                            Assigned To:
+                          </span>{" "}
+                          {proj.assigned ? (
+                            <span className="text-green-600 font-medium">
+                              {proj.assigned}
+                            </span>
+                          ) : (
+                            <span className="text-red-600 font-medium italic">
+                              Pending...
+                            </span>
+                          )}
+                        </p>
+
+                        <div className="flex items-center gap-2">
+                          <span className="font-semibold text-salesmain">
+                            Service:
+                          </span>
+                          <span className="px-3 py-1 text-xs bg-blue-100 text-salesmain rounded-full capitalize font-semibold">
+                            {proj.service.replace(/_/g, " ")}
+                          </span>
+                        </div>
+                      </div>
+
+                      {/* CTA Button */}
                       <button
                         onClick={() => setModalData(proj)}
-                        className="px-4 py-2 bg-salesmain text-white rounded-full text-sm font-semibold hover:bg-salesHover transition mt-2"
+                        className="self-start px-5 py-2 bg-salesmain text-white text-sm font-semibold rounded-lg hover:bg-salesHover transition-all duration-300"
                       >
                         View Details
                       </button>
@@ -148,8 +179,8 @@ const SalesDashboard = () => {
 
           {/* Add New Project Section */}
           {activeSection === "new" && (
-            <div className="p-6 shadow-custom-gray rounded-md bg-white max-w-5xl mx-auto">
-              <h2 className="text-[28px] font-bold text-salesmain mb-1 text-center">
+            <div className="p-8 bg-white shadow-lg rounded-xl max-w-6xl mx-auto border border-gray-200">
+              <h2 className="text-3xl font-extrabold text-center text-salesmain mb-6">
                 Add New Project
               </h2>
 
@@ -158,42 +189,41 @@ const SalesDashboard = () => {
                   e.preventDefault();
                   const formData = new FormData(e.target);
                   const data = Object.fromEntries(formData.entries());
-                  
+
                   const logoFile = formData.get("company_logo");
                   data.logoURL =
                     logoFile && logoFile.size > 0
                       ? URL.createObjectURL(logoFile)
                       : "";
-                
+
                   data.PI = formData.get("PI");
                   data.service = selectedService;
                   data.checklist = Array.from(formData.getAll("checklist"));
-                  
-                  if (["SMO", "Paid_Media"].includes(selectedService)) {
+
+                  if (["SMO"].includes(selectedService)) {
                     const counts = {};
                     const videoCounts = {};
                     const reelCounts = {};
-                    
+
                     for (let item of data.checklist) {
                       const postCountKey = `post_count_${item}`;
                       const videoCountKey = `video_count_${item}`;
                       const reelCountKey = `reel_count_${item}`;
-                      
+
                       const postCount = formData.get(postCountKey);
                       const videoCount = formData.get(videoCountKey);
                       const reelCount = formData.get(reelCountKey);
-                      
+
                       if (postCount) counts[item] = postCount;
                       if (videoCount) videoCounts[item] = videoCount;
                       if (reelCount) reelCounts[item] = reelCount;
                     }
-                    
+
                     data.postCounts = counts;
                     data.videoCounts = videoCounts;
                     data.reelCounts = reelCounts;
                   }
-                
-                  // Validate checklist items before proceeding
+
                   if (serviceOptions[selectedService]?.length > 0) {
                     const checklistItems = formData.getAll("checklist");
                     if (checklistItems.length < 1) {
@@ -201,209 +231,194 @@ const SalesDashboard = () => {
                       return;
                     }
                   }
-                
-                  // Add the new project data to existing projects
+
                   setProjects([data, ...projects]);
                   setActiveSection("existing");
                 }}
-                
               >
                 {/* Company Details */}
-                <fieldset className="border-salesmain border pt-3 pb-5 px-6 rounded-md shadow mb-3">
-                  <legend className="text-salesmain text-2xl font-bold px-2">
+                <fieldset className="border border-salesmain bg-gray-50 p-6 rounded-xl mb-6 shadow-sm">
+                  <legend className="text-salesmain text-xl font-semibold px-3">
                     Company Details
                   </legend>
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-6 ">
+                  <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+                    {[
+                      {
+                        label: "Company Name",
+                        name: "company_name",
+                        type: "text",
+                      },
+                      {
+                        label: "Company Address",
+                        name: "company_address",
+                        type: "text",
+                      },
+                      {
+                        label: "Client Email",
+                        name: "client_email",
+                        type: "email",
+                      },
+                      {
+                        label: "Client Phone Number",
+                        name: "client_phone_number",
+                        type: "tel",
+                        pattern: "[0-9]{10}",
+                      },
+                      {
+                        label: "Client Name",
+                        name: "client_name",
+                        type: "text",
+                      },
+                      {
+                        label: "Website Link",
+                        name: "website_link",
+                        type: "url",
+                      },
+                    ].map(({ label, name, type, pattern }) => (
+                      <div key={name}>
+                        <label className="block text-gray-700 font-medium mb-1">
+                          {label}:
+                        </label>
+                        <input
+                          type={type}
+                          name={name}
+                          required={type !== "url"}
+                          pattern={pattern}
+                          className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-salesmain transition"
+                        />
+                      </div>
+                    ))}
+
                     <div>
-                      <label>Company Name:</label>
-                      <input
-                        type="text"
-                        name="company_name"
-                        required
-                        className="w-full p-2 border border-gray-400 rounded-md"
-                      />
-                    </div>
-                    <div>
-                      <label>Company Address:</label>
-                      <input
-                        type="text"
-                        name="company_address"
-                        required
-                        className="w-full p-2 border border-gray-400 rounded-md"
-                      />
-                    </div>
-                    <div>
-                      <label>Client Email:</label>
-                      <input
-                        type="email"
-                        name="client_email"
-                        required
-                        className="w-full p-2 border border-gray-400 rounded-md"
-                      />
-                    </div>
-                    <div>
-                      <label>Client Phone Number:</label>
-                      <input
-                        type="tel"
-                        name="client_phone_number"
-                        required
-                        pattern="[0-9]{10}"
-                        className="w-full p-2 border border-gray-400 rounded-md"
-                      />
-                    </div>
-                    <div>
-                      <label>Client Name:</label>
-                      <input
-                        type="text"
-                        name="client_name"
-                        required
-                        className="w-full p-2 border border-gray-400 rounded-md"
-                      />
-                    </div>
-                    <div>
-                      <label>Website Link:</label>
-                      <input
-                        type="url"
-                        name="website_link"
-                        className="w-full p-2 border border-gray-400 rounded-md"
-                      />
-                    </div>
-                    <div>
-                      <label>Company Logo:</label>
+                      <label className="block text-gray-700 font-medium mb-1">
+                        Company Logo:
+                      </label>
                       <input
                         type="file"
                         name="company_logo"
                         accept="image/*"
-                        className="w-full p-2 border border-gray-400 rounded-md"
+                        className="w-full px-4 py-2 border border-gray-300 rounded-lg"
                       />
                     </div>
+
                     <div>
-                      <label>Attach PI:</label>
+                      <label className="block text-gray-700 font-medium mb-1">
+                        Attach PI:
+                      </label>
                       <input
                         type="file"
                         name="PI"
                         accept="application/pdf"
                         required
-                        className="w-full p-2 border border-gray-400 rounded-md"
+                        className="w-full px-4 py-2 border border-gray-300 rounded-lg"
                       />
                     </div>
                   </div>
                 </fieldset>
 
                 {/* Contract Details */}
-                <fieldset className="border-salesmain border pt-3 pb-5 px-6 rounded-md shadow">
-                  <legend className="text-salesmain text-2xl font-bold px-2">
+                <fieldset className="border border-salesmain bg-gray-50 p-6 rounded-xl shadow-sm">
+                  <legend className="text-salesmain text-xl font-semibold px-3">
                     Contract Details
                   </legend>
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                    <div>
-                      <label>Business Type:</label>
-                      <select
-                        name="business_type"
-                        required
-                        className="w-full p-2 border border-gray-400 rounded-md"
-                      >
-                        <option value="Product">Product</option>
-                        <option value="Service">Service</option>
-                      </select>
-                    </div>
-                    <div>
-                      <label>Industry Type:</label>
-                      <select
-                        name="industry_type"
-                        required
-                        className="w-full p-2 border border-gray-400 rounded-md"
-                      >
-                        <option value="Manufacturer">Manufacturer</option>
-                        <option value="Supplier">Supplier</option>
-                        <option value="Trader">Trader</option>
-                        <option value="Service Provider">Service Provider</option>
-                        <option value="Importer">Importer</option>
-                        <option value="Exporter">Exporter</option>
-                      </select>
-                    </div>
-                    <div>
-                      <label>Client Priority:</label>
-                      <select
-                        name="client_priority"
-                        required
-                        className="w-full p-2 border border-gray-400 rounded-md"
-                      >
-                        <option value="Prime Client">Prime Client</option>
-                        <option value="Super High Value">Super High Value</option>
-                        <option value="High Value">High Value</option>
-                        <option value="Mid Value">Mid Value</option>
-                        <option value="Low Value">Low Value</option>
-                        <option value="Super Low Value">Super Low Value</option>
-                      </select>
-                    </div>
-                    <div>
-                      <label>Client Origin:</label>
-                      <select
-                        name="client_origin"
-                        required
-                        className="w-full p-2 border border-gray-400 rounded-md"
-                      >
-                        <option value="Domestic">Domestic</option>
-                        <option value="International">International</option>
-                      </select>
-                    </div>
-                    <div>
-                      <label>Contract Date:</label>
-                      <input
-                        type="date"
-                        name="contract_date"
-                        required
-                        className="w-full p-2 border border-gray-400 rounded-md"
-                      />
-                    </div>
-                    <div>
-                      <label>Contract Duration:</label>
-                      <input
-                        type="text"
-                        name="contract_duration"
-                        required
-                        className="w-full p-2 border border-gray-400 rounded-md"
-                      />
-                    </div>
-                    <div>
-                      <label>Renewal Date:</label>
-                      <input
-                        type="date"
-                        name="renewal"
-                        required
-                        className="w-full p-2 border border-gray-400 rounded-md"
-                      />
-                    </div>
-                    <div>
-                      <label>Amount:</label>
-                      <input
-                        type="text"
-                        name="amount"
-                        required
-                        className="w-full p-2 border border-gray-400 rounded-md"
-                      />
-                    </div>
-                    <div>
-                      <label>Sales Person Name:</label>
-                      <input
-                        type="text"
-                        name="Sales_person"
-                        required
-                        className="w-full p-2 border border-gray-400 rounded-md"
-                      />
-                    </div>
+                  <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+                    {[
+                      {
+                        label: "Business Type",
+                        name: "business_type",
+                        options: ["Product", "Service"],
+                      },
+                      {
+                        label: "Industry Type",
+                        name: "industry_type",
+                        options: [
+                          "Manufacturer",
+                          "Supplier",
+                          "Trader",
+                          "Service Provider",
+                          "Importer",
+                          "Exporter",
+                        ],
+                      },
+                      {
+                        label: "Client Priority",
+                        name: "client_priority",
+                        options: [
+                          "Prime Client",
+                          "Super High Value",
+                          "High Value",
+                          "Mid Value",
+                          "Low Value",
+                          "Super Low Value",
+                        ],
+                      },
+                      {
+                        label: "Client Origin",
+                        name: "client_origin",
+                        options: ["Domestic", "International"],
+                      },
+                    ].map(({ label, name, options }) => (
+                      <div key={name}>
+                        <label className="block text-gray-700 font-medium mb-1">
+                          {label}:
+                        </label>
+                        <select
+                          name={name}
+                          required
+                          className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-salesmain transition"
+                        >
+                          {options.map((opt) => (
+                            <option value={opt} key={opt}>
+                              {opt}
+                            </option>
+                          ))}
+                        </select>
+                      </div>
+                    ))}
+
+                    {[
+                      {
+                        label: "Contract Date",
+                        name: "contract_date",
+                        type: "date",
+                      },
+                      {
+                        label: "Contract Duration",
+                        name: "contract_duration",
+                        type: "text",
+                      },
+                      { label: "Renewal Date", name: "renewal", type: "date" },
+                      { label: "Amount", name: "amount", type: "text" },
+                      {
+                        label: "Sales Person Name",
+                        name: "Sales_person",
+                        type: "text",
+                      },
+                    ].map(({ label, name, type }) => (
+                      <div key={name}>
+                        <label className="block text-gray-700 font-medium mb-1">
+                          {label}:
+                        </label>
+                        <input
+                          type={type}
+                          name={name}
+                          required
+                          className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-salesmain transition"
+                        />
+                      </div>
+                    ))}
                   </div>
 
-                  <div className="mt-4">
-                    <label className="block text-salesmain text-lg font-bold mb-3">
+                  {/* Service Selection */}
+                  <div className="mt-6">
+                    <label className="block text-lg font-bold text-salesmain mb-2">
                       Select a Service:
                     </label>
-                    <div className="flex gap-3 flex-wrap">
+                    <div className="flex flex-wrap gap-4">
                       {Object.keys(serviceOptions).map((service) => (
                         <label
                           key={service}
-                          className="flex items-center gap-1 text-gray-800 cursor-pointer"
+                          className="flex items-center space-x-2 cursor-pointer text-gray-700"
                         >
                           <input
                             type="radio"
@@ -414,30 +429,29 @@ const SalesDashboard = () => {
                               setSelectedService(e.target.value);
                               setPostCounts({});
                             }}
-                            className="accent-salesmain cursor-pointer"
+                            className="accent-salesmain"
                           />
-                          <span className="capitalize">
-                            {service.replace(/_/g, " ")}
-                          </span>
+                          <span>{service.replace(/_/g, " ")}</span>
                         </label>
                       ))}
                     </div>
                   </div>
 
+                  {/* Checklist and Dynamic Counts */}
                   {selectedService && (
-                    <div className="mt-4">
-                      <h3 className="text-md font-semibold text-salesmain mb-2 capitalize">
+                    <div className="mt-6">
+                      <h3 className="text-lg font-semibold text-salesmain mb-3 capitalize">
                         {selectedService.replace(/_/g, " ")}
                       </h3>
-                      <ul className="grid grid-cols-2 md:grid-cols-4 gap-2">
-                        {["SMO", "Paid_Media"].includes(selectedService)
+                      <ul className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                        {["SMO"].includes(selectedService)
                           ? serviceOptions[selectedService].map(
                               (item, index) => (
                                 <li
                                   key={index}
-                                  className="col-span-2 flex flex-col gap-1"
+                                  className="bg-white p-4 rounded-md border border-gray-300 shadow-sm"
                                 >
-                                  <label className="flex items-center gap-2">
+                                  <label className="flex items-center gap-2 text-gray-800 font-medium">
                                     <input
                                       type="checkbox"
                                       id={item}
@@ -469,66 +483,58 @@ const SalesDashboard = () => {
                                       }}
                                       className="accent-salesmain"
                                     />
-                                    <span className="text-gray-700">
-                                      {item}
-                                    </span>
+                                    {item}
                                   </label>
-
                                   {postCounts[item] !== undefined && (
-                                    <div className="ml-6 flex flex-col gap-1">
-                                      <label className="text-sm text-gray-600">
-                                        Weekly Post Count for {item}:
-                                      </label>
-                                      <input
-                                        type="number"
-                                        name={`post_count_${item}`}
-                                        min="0"
-                                        required
-                                        value={postCounts[item]}
-                                        onChange={(e) =>
-                                          setPostCounts({
-                                            ...postCounts,
-                                            [item]: e.target.value,
-                                          })
-                                        }
-                                        className="w-24 p-1 border border-gray-400 rounded-md"
-                                      />
-
-                                      <label className="text-sm text-gray-600 mt-2">
-                                        Weekly Video Count for {item}:
-                                      </label>
-                                      <input
-                                        type="number"
-                                        name={`video_count_${item}`}
-                                        min="0"
-                                        required
-                                        value={videoCounts[item]}
-                                        onChange={(e) =>
-                                          setVideoCounts({
-                                            ...videoCounts,
-                                            [item]: e.target.value,
-                                          })
-                                        }
-                                        className="w-24 p-1 border border-gray-400 rounded-md"
-                                      />
-
-                                      <label className="text-sm text-gray-600 mt-2">
-                                        Weekly Reel Count for {item}:
-                                      </label>
-                                      <input
-                                        type="number"
-                                        name={`reel_count_${item}`}
-                                        min="0"
-                                        required
-                                        value={reelCounts[item]}
-                                        onChange={(e) =>
-                                          setReelCounts({
-                                            ...reelCounts,
-                                            [item]: e.target.value,
-                                          })
-                                        }
-                                        className="w-24 p-1 border border-gray-400 rounded-md"
-                                      />
+                                    <div className="mt-2 space-y-2 text-sm text-gray-700">
+                                      <div>
+                                        <label>Weekly Post Count:</label>
+                                        <input
+                                          type="number"
+                                          name={`post_count_${item}`}
+                                          value={postCounts[item]}
+                                          onChange={(e) =>
+                                            setPostCounts({
+                                              ...postCounts,
+                                              [item]: e.target.value,
+                                            })
+                                          }
+                                          className="w-24 ml-2 px-2 py-1 border border-gray-300 rounded-md"
+                                          required
+                                        />
+                                      </div>
+                                      <div>
+                                        <label>Weekly Video Count:</label>
+                                        <input
+                                          type="number"
+                                          name={`video_count_${item}`}
+                                          value={videoCounts[item]}
+                                          onChange={(e) =>
+                                            setVideoCounts({
+                                              ...videoCounts,
+                                              [item]: e.target.value,
+                                            })
+                                          }
+                                          className="w-24 ml-2 px-2 py-1 border border-gray-300 rounded-md"
+                                          required
+                                        />
+                                      </div>
+                                      <div>
+                                        <label>Weekly Reel Count:</label>
+                                        <input
+                                          type="number"
+                                          name={`reel_count_${item}`}
+                                          value={reelCounts[item]}
+                                          onChange={(e) =>
+                                            setReelCounts({
+                                              ...reelCounts,
+                                              [item]: e.target.value,
+                                            })
+                                          }
+                                          className="w-24 ml-2 px-2 py-1 border border-gray-300 rounded-md"
+                                          required
+                                        />
+                                      </div>
                                     </div>
                                   )}
                                 </li>
@@ -549,7 +555,7 @@ const SalesDashboard = () => {
                                   />
                                   <label
                                     htmlFor={item}
-                                    className="text-gray-700"
+                                    className="text-gray-700 font-medium"
                                   >
                                     {item}
                                   </label>
@@ -560,15 +566,16 @@ const SalesDashboard = () => {
                     </div>
                   )}
 
-                  <div className="mt-3">
-                    <label className="block font-medium">Service Brief:</label>
+                  <div className="mt-6">
+                    <label className="block font-medium text-gray-700 mb-2">
+                      Service Brief (Max 250 words):
+                    </label>
                     <input
                       type="text"
                       name="brief"
-                      placeholder="Max 250 Words"
-                      pattern=".{250,}"
-                      className="w-full p-2 border border-gray-400 rounded-md"
                       required
+                      pattern=".{250,}"
+                      className="w-full p-3 border border-gray-300 rounded-md focus:ring-2 focus:ring-salesmain focus:outline-none"
                     />
                   </div>
                 </fieldset>
@@ -577,33 +584,70 @@ const SalesDashboard = () => {
                   <input
                     type="submit"
                     value="Add"
-                    className="bg-salesmain hover:bg-salesHover text-white mt-4 py-2 px-5 rounded-md text-lg cursor-pointer"
+                    className="bg-salesmain hover:bg-salesHover text-white py-2 px-6 rounded-lg mt-6 text-lg font-semibold transition shadow-md hover:shadow-lg"
                   />
                 </div>
               </form>
             </div>
           )}
+
           {activeSection === "renewals" && (
-            <div className="p-6 shadow-custom-gray rounded-md bg-white max-w-5xl mx-auto">
+            <div className="p-6 shadow-custom-gray rounded-md bg-white max-w-6xl mx-auto">
               <h2 className="text-[28px] font-bold text-salesmain mb-6 text-center">
                 Upcoming Renewals
               </h2>
-              <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-                {projects.map((proj, index) => (
-                  <div key={index} className="relative">
-                    <div className="bg-gradient-to-br from-white to-[#f2f6f9] border border-gray-200 shadow-custom-grey rounded-2xl p-4 hover:shadow-xl text-center cursor-pointer transition-all duration-300">
-                      <h2 className="text-[25px] font-semibold mb-1 text-salesmain">
-                        {proj.company_name}
-                      </h2>
-                      <p className="text-base font-semibold text-salesmain mb-1">
-                        Sales Person: {proj.Sales_person}
-                      </p>
-                      <p className="font-semibold text-salesSidebar">
-                        Assigned To: {proj.Assigned}
-                      </p>
+              <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 mt-6">
+                  {projects.map((proj, index) => (
+                    <div
+                      key={index}
+                      className="p-6 bg-white/80 backdrop-blur-sm border border-gray-200 rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 cursor-pointer flex flex-col gap-4 w-full max-w-md mx-auto"
+                    >
+                      {/* Header */}
+                      <div className="flex items-center justify-between">
+                        <h3 className="text-xl font-bold text-salesmain">
+                          {proj.company_name}
+                        </h3>
+                        <span className="text-xs text-gray-500">
+                          {new Date().toLocaleDateString()}
+                        </span>
+                      </div>
 
-                      {/* Buttons inside the card but don't trigger modal */}
-                      <div className="flex justify-center gap-2 mt-3">
+                      {/* Info Block */}
+                      <div className="text-[15px] text-gray-700 space-y-1">
+                        <p>
+                          <span className="font-semibold text-salesmain">
+                            Client:
+                          </span>{" "}
+                          {proj.client_name}
+                        </p>
+
+                        <p>
+                          <span className="font-semibold text-salesmain">
+                            Assigned To:
+                          </span>{" "}
+                          {proj.assigned ? (
+                            <span className="text-green-600 font-medium">
+                              {proj.assigned}
+                            </span>
+                          ) : (
+                            <span className="text-red-600 font-medium italic">
+                              Pending...
+                            </span>
+                          )}
+                        </p>
+
+                        <div className="flex items-center gap-2">
+                          <span className="font-semibold text-salesmain">
+                            Service:
+                          </span>
+                          <span className="px-3 py-1 text-xs bg-blue-100 text-salesmain rounded-full capitalize font-semibold">
+                            {proj.service.replace(/_/g, " ")}
+                          </span>
+                        </div>
+                      </div>
+
+                      {/* CTA Button */}
+                      <div className="flex justify-start gap-2">
                         <button
                           onClick={() => setRenewDate(true)}
                           className="px-4 py-2 bg-salesmain text-white rounded-full text-sm font-semibold hover:bg-salesHover transition"
@@ -619,7 +663,7 @@ const SalesDashboard = () => {
                         </button>
                       </div>
                       {renewDate && (
-                        <div className="mt-5 bg-[#f8fafc] border border-gray-300 rounded-xl p-4 shadow-inner">
+                        <div className=" bg-[#f8fafc] border border-gray-300 rounded-xl p-4 shadow-inner">
                           <label className="block text-sm font-semibold text-salesmain mb-2">
                             Set New Renewal Date:
                           </label>
@@ -639,9 +683,8 @@ const SalesDashboard = () => {
                         </div>
                       )}
                     </div>
-                  </div>
-                ))}
-              </div>
+                  ))}
+                </div>
             </div>
           )}
         </div>
@@ -649,39 +692,62 @@ const SalesDashboard = () => {
 
       {/* Modal */}
       {modalData && (
-        <div className="fixed inset-0 bg-black/50 z-50 flex items-center justify-center px-4">
-          <div className="relative bg-white rounded-3xl w-full max-w-4xl max-h-[90vh] overflow-y-auto shadow-2xl border border-gray-200 p-8">
-            {/*  Close Button */}
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 backdrop-blur-sm px-4 animate-fadeIn">
+          <div className="relative w-full max-w-4xl max-h-[90vh] overflow-y-auto rounded-2xl border border-gray-200 bg-white shadow-2xl p-8">
+            {/* Close Button */}
             <button
-              className="absolute top-4 right-4 text-gray-500 hover:text-black text-3xl font-bold"
+              className="absolute top-4 right-4 text-gray-400 hover:text-gray-600 text-3xl font-bold"
               onClick={() => setModalData(null)}
             >
               &times;
             </button>
 
-            {/*  Company Title */}
-            <div className="text-center mb-6">
-              <h2 className="text-3xl font-bold text-salesmain tracking-wide">
+            {/* Header */}
+            <div className="text-center">
+              <h2 className="text-3xl font-extrabold text-salesmain tracking-tight">
                 {modalData.company_name}
               </h2>
+              <p className="text-sm text-gray-500 mt-1">
+                Detailed Project Overview
+              </p>
             </div>
 
-            {/*  Project Details */}
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 text-[15px] text-gray-700 leading-6">
-              <p>
-                <strong>Client Name:</strong> {modalData.client_name}
-              </p>
-              <p>
-                <strong>Email:</strong> {modalData.client_email}
-              </p>
-              <p>
-                <strong>Phone:</strong> {modalData.client_phone_number}
-              </p>
+            {/* Details Grid */}
+            {/* Details Grid */}
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-3 text-[15px] text-gray-700 leading-6 border-t border-gray-100 pt-6">
+              {/* Mapped fields without address */}
+              {[
+                { label: "Client Name", value: modalData.client_name },
+                { label: "Email", value: modalData.client_email },
+                { label: "Phone", value: modalData.client_phone_number },
+                { label: "Sales Person", value: modalData.Sales_person },
+                { label: "Business Type", value: modalData.business_type },
+                { label: "Industry Type", value: modalData.industry_type },
+                { label: "Priority", value: modalData.client_priority },
+                { label: "Origin", value: modalData.client_origin },
+                { label: "Service", value: modalData.service },
+                { label: "Contract Date", value: modalData.contract_date },
+                { label: "Duration", value: modalData.contract_duration },
+                { label: "Renewal", value: modalData.renewal },
+                { label: "Amount", value: `₹${modalData.amount}` },
+              ].map(
+                (item, i) =>
+                  item.value && (
+                    <div key={i}>
+                      <p className="text-sm font-semibold text-salesmain">
+                        {item.label}
+                      </p>
+                      <p className="text-gray-800">{item.value}</p>
+                    </div>
+                  )
+              )}
 
-              {/*  Conditional Website */}
+              {/* Website block */}
               {modalData.website_link && (
-                <p>
-                  <strong>Website:</strong>{" "}
+                <div>
+                  <p className="text-sm font-semibold text-salesmain">
+                    Website
+                  </p>
                   <a
                     href={modalData.website_link}
                     target="_blank"
@@ -689,76 +755,50 @@ const SalesDashboard = () => {
                   >
                     {modalData.website_link}
                   </a>
-                </p>
+                </div>
               )}
 
-              <p>
-                <strong>Sales Person:</strong> {modalData.Sales_person}
-              </p>
-              <p>
-                <strong>Business Type:</strong> {modalData.business_type}
-              </p>
-              <p>
-                <strong>Industry Type:</strong> {modalData.industry_type}
-              </p>
-              <p>
-                <strong>Client Priority:</strong> {modalData.client_priority}
-              </p>
-              <p>
-                <strong>Client Origin:</strong> {modalData.client_origin}
-              </p>
-              <p>
-                <strong>Service:</strong> {modalData.service}
-              </p>
-              <p>
-                <strong>Contract Date:</strong> {modalData.contract_date}
-              </p>
-              <p>
-                <strong>Contract Duration:</strong>{" "}
-                {modalData.contract_duration}
-              </p>
-              <p>
-                <strong>Renewal:</strong> {modalData.renewal}
-              </p>
-              <p>
-                <strong>Amount:</strong> ₹{modalData.amount}
-              </p>
-              <p>
-                <strong>Company Address:</strong> {modalData.company_address}
-              </p>
+              {/* Address block with proper line breaks */}
+              {modalData.company_address && (
+                <div className="md:col-span-3">
+                  <p className="text-sm font-semibold text-salesmain">
+                    Company Address
+                  </p>
+                  <p className="text-gray-800 whitespace-pre-line">
+                    {modalData.company_address}
+                  </p>
+                </div>
+              )}
+
+              
             </div>
 
             {/* Checklist */}
             {modalData.checklist?.length > 0 && (
-              <div className="mt-6">
-                <p className="font-semibold text-lg text-salesmain mb-2">
-                  Checklist
-                </p>
-                <div className="flex flex-wrap gap-3">
+              <div className="mt-4">
+                <h3 className="text-lg font-semibold text-salesmain mb-3">
+                  Selected Services
+                </h3>
+                <div className="flex flex-wrap gap-2">
                   {modalData.checklist.map((item, i) => (
                     <div
                       key={i}
-                      className="bg-[#e2f3f3] text-salesmain px-3 py-2 rounded-xl text-base font-medium shadow flex flex-col items-center"
+                      className="rounded-full border border-salesmain/30 bg-salesmainlight text-salesmain px-4 py-1 text-[14px] font-medium flex items-center gap-1"
                     >
                       <span>{item}</span>
-                      {/* Show post count if available */}
-                      {modalData.postCounts && modalData.postCounts[item] && (
-                        <span className="font-semibold text-sm text-salesmain mb-2">
-                          Weekly Posts: {modalData.postCounts[item]}
+                      {modalData.postCounts?.[item] && (
+                        <span className="text-gray-600 text-xs">
+                          ({modalData.postCounts[item]} posts)
                         </span>
                       )}
-
-                      {/* Show reel count if available */}
-                      {modalData.reelCounts && modalData.reelCounts[item] && (
-                        <span className="font-semibold text-sm text-salesmain mb-2">
-                          Weekly Reels: {modalData.reelCounts[item]}
+                      {modalData.reelCounts?.[item] && (
+                        <span className="text-gray-600 text-xs">
+                          ({modalData.reelCounts[item]} reels)
                         </span>
                       )}
-
-                      {/* Show video count if available */}
-                      {modalData.videoCounts && modalData.videoCounts[item] && (
-                        <span className="font-semibold text-sm text-salesmain mb-2">
-                          Weekly Videos: {modalData.videoCounts[item]}
+                      {modalData.videoCounts?.[item] && (
+                        <span className="text-gray-600 text-xs">
+                          ({modalData.videoCounts[item]} videos)
                         </span>
                       )}
                     </div>
@@ -767,50 +807,48 @@ const SalesDashboard = () => {
               </div>
             )}
 
-            {/*  Brief */}
+            {/* Brief */}
             {modalData.brief && (
-              <div className="mt-6">
-                <p className="font-semibold text-lg text-salesmain mb-2">
+              <div className="mt-4">
+                <h3 className="text-lg font-semibold text-salesmain">
                   Service Brief
-                </p>
-                <p className="text-base text-gray-700">{modalData.brief}</p>
+                </h3>
+                <div className="rounded-md bg-gray-50 border border-gray-100 text-gray-700 text-sm leading-relaxed">
+                  {modalData.brief}
+                </div>
               </div>
             )}
 
-            <div className="grid grid-cols-1 sm:grid-cols-2 mt-4">
-              {/*  PI Document */}
+            {/* Documents */}
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 mt-1">
               {modalData.PI && (
-                <div className="">
-                  <p className="font-semibold text-lg text-salesmain mb-2">
+                <div>
+                  <h3 className="text-md font-semibold text-salesmain mb-2">
                     PI Document
-                  </p>
+                  </h3>
                   <a
                     href={URL.createObjectURL(modalData.PI)}
                     target="_blank"
-                    className="inline-block bg-salesmain hover:bg-salesHover text-white px-5 py-2 rounded-lg transition duration-300 text-sm"
+                    className="inline-flex items-center justify-center rounded-full bg-salesmain hover:bg-salesHover text-white px-5 py-2 text-sm font-medium transition"
                   >
                     View PDF
                   </a>
                 </div>
               )}
-
-              {/* logo */}
-              {modalData.logoURL &&
-                typeof modalData.logoURL === "string" &&
-                modalData.logoURL.trim() !== "" && (
-                  <div className="">
-                    <p className="font-semibold text-lg text-salesmain mb-2">
-                      Logo
-                    </p>
-                    <a
-                      href={modalData.logoURL}
-                      target="_blank"
-                      className="inline-block bg-salesmain hover:bg-salesHover text-white px-5 py-2 rounded-lg transition duration-300 text-sm"
-                    >
-                      View Logo
-                    </a>
-                  </div>
-                )}
+              {modalData.logoURL?.trim() && (
+                <div>
+                  <h3 className="text-md font-semibold text-salesmain mb-2">
+                    Logo
+                  </h3>
+                  <a
+                    href={modalData.logoURL}
+                    target="_blank"
+                    className="inline-flex items-center justify-center rounded-full bg-salesmain hover:bg-salesHover text-white px-5 py-2 text-sm font-medium transition"
+                  >
+                    View Logo
+                  </a>
+                </div>
+              )}
             </div>
           </div>
         </div>

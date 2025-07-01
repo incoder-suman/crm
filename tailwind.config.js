@@ -7,13 +7,16 @@ export default {
   theme: {
     extend: {
       colors: {
-        salesmain: '#206879',  
+        salesmain: '#206879',
+        salesmainlight: 'rgb(32, 104, 121,0.4)',
         salesSidebar: '#248ca3', 
         salesHover: '#164f5a',
-        adminmain: '#a72468',  
+        adminmain: '#a72468', 
+        adminmainlight: 'rgb(167, 36, 104,0.5)', 
         adminSidebar: '#f94ba5', 
         adminHover: '#962b64',
         teammain: '#28378f',  
+        teammainlight:'rgb(40, 55, 143,0.5)',
         teamSidebar: '#4056c1',  
         teamHover:'#3548b7',   
       },
@@ -30,6 +33,7 @@ export default {
         '100%': { transform: 'translateX(130px)' },
         }
       },
+      
     },
   },
   plugins: [],
