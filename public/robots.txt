@@ -1,0 +1,10 @@
+User-agent: *
+Allow: /
+
+# Block private/utility pages (edit as needed)
+Disallow: /thank-you/
+Disallow: /admin/
+Disallow: /private/
+
+# Sitemap
+Sitemap: https://www.dfurniture.in/sitemap.xml
